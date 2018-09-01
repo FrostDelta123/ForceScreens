@@ -6,6 +6,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import net.minecraft.client.Minecraft;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
+import net.minecraft.util.ChatComponentText;
 
 
 public class Utils {
@@ -41,6 +42,10 @@ public class Utils {
 
         mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("AntiCheat", buffer.toByteArray()));
 
+    }
+
+    public static void sendMessage(String msg) {
+        mc.thePlayer.addChatMessage(new ChatComponentText(("&f[&bAntiCheat&f] " + msg).replace("&", "\u00a7")));
     }
 
     //P.S. 1.7.10 Хуйня

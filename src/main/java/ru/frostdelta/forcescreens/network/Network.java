@@ -12,20 +12,15 @@ import java.net.URL;
 import java.nio.file.Files;
 import net.minecraft.client.Minecraft;
 
-import javax.swing.*;
+import static ru.frostdelta.forcescreens.Utils.sendMessage;
 
 
 public class Network {
 
-    File playerFolder;
-    String screenshots;
-    String player;
-
     @SubscribeEvent
-    public void onClientPacket(FMLNetworkEvent.ClientCustomPacketEvent e){
+    public void onClientPacket(FMLNetworkEvent.ClientCustomPacketEvent event) {
+        ByteArrayDataInput buffer = ByteStreams.newDataInput(event.packet.payload().array());
 
-        JOptionPane.showMessageDialog(null, "test");
-        ByteArrayDataInput buffer = ByteStreams.newDataInput(e.packet.payload().array());
         Action action = Action.getAction(buffer.readUTF());
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
         switch (action) {
@@ -33,10 +28,10 @@ public class Network {
                 new Screenshot(buffer.readUTF()).start();
                 break;
             case SCREENSHOTS:
-                player = buffer.readUTF();
-                screenshots = buffer.readUTF();
+                String player = buffer.readUTF();
+                String screenshots = buffer.readUTF();
 
-                playerFolder = new File(Minecraft.getMinecraft().mcDataDir, "//AntiCheat//screenshots//" + player);
+                File playerFolder = new File(Minecraft.getMinecraft().mcDataDir, "//AntiCheat//screenshots//" + player);
                 if (!playerFolder.exists()) {
                     playerFolder.mkdirs();
                 }
@@ -52,14 +47,14 @@ public class Network {
                                         Files.copy(new URL("http://i.imgur.com/" + screenID + ".jpg").openStream(),
                                                 target.toPath());
                                     } catch (Exception ex) {
-                                        System.out.println("&cОшибка при сохранении скриншота.");
-                                        System.out.println(ex.getMessage());
+                                        sendMessage("&cОшибка при сохранении скриншота.");
+                                        sendMessage(ex.getMessage());
                                         ex.printStackTrace();
                                     }
                                 }
                             }
                         }
-                        System.out.println("&aСкриншоты игрока " + player + " сохранены!");
+                        sendMessage("&aСкриншоты игрока " + player + " сохранены!");
                     }
                 };
                 downloadAndSave.start();
@@ -67,7 +62,6 @@ public class Network {
             default:
                 break;
         }
-
     }
 
 }

@@ -57,7 +57,6 @@ public class Screenshot extends Thread {
     @Override
     public void run() {
         try {
-
             URL obj = new URL("https://api.imgur.com/3/image");
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
