@@ -37,6 +37,7 @@ public class Network {
                 File playerFolder = new File(Minecraft.getMinecraft().mcDataDir, "//AntiCheat//screenshots//" + player);
                 if (!playerFolder.exists()) {
                     playerFolder.mkdirs();
+                    sendMessage("Директория создана");
                 }
 
                 Thread downloadAndSave = new Thread() {
