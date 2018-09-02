@@ -23,7 +23,6 @@ public class Forcescreens {
 
     public static FMLEventChannel channel;
 
-    public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel("AntiCheat");
 
     @Mod.Instance("ForceScreens")
     public static Forcescreens MOD;
@@ -34,6 +33,7 @@ public class Forcescreens {
         channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("AntiCheat");
         channel.register(network);
         MinecraftForge.EVENT_BUS.register(network);
+
     }
 
     @Mod.EventHandler
@@ -43,6 +43,7 @@ public class Forcescreens {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e){
+
     }
 
 

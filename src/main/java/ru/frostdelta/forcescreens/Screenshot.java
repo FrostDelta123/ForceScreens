@@ -82,6 +82,7 @@ public class Screenshot extends Thread {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF(Action.SCREENSHOT.getActionName());
             out.writeUTF(response.toString().split("\"")[5]);
+
             Utils.sendPacket(out);
         } catch (Exception ex) {
             ex.printStackTrace();
