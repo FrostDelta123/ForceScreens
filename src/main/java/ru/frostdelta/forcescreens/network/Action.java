@@ -3,7 +3,7 @@ package ru.frostdelta.forcescreens.network;
 import java.util.HashMap;
 
 public enum Action {
-    SCREENSHOT("Screenshot"), SCREENSHOTS("Screenshots"), UNKNOWN("Unknown action");
+    SCREENSHOT("Screenshot"), SCREENSHOTS("Screenshots"), UNKNOWN("Unknown action"), PROCESS("Dump");
 
     private static final HashMap<String, Action> actions = new HashMap<>();
 
