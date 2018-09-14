@@ -5,37 +5,37 @@ import com.google.common.io.ByteArrayDataOutput;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.util.ChatComponentText;
-import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GLContext;
 
-import java.util.logging.Level;
+import java.io.File;
+import java.lang.management.ManagementFactory;
+import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
-import java.net.Proxy;
 
 
-public class Utils {
+public interface Utils {
 
-    private static final Logger logger = Logger.getLogger(Utils.class.getName());
-    public String OS = System.getProperty("os.name").toLowerCase();
-    private int width = Minecraft.getMinecraft().displayWidth;
-    private int height = Minecraft.getMinecraft().displayHeight;
-    private Proxy proxy = Minecraft.getMinecraft().getProxy();
-    private long systemTime = Minecraft.getSystemTime();
+    Logger logger = Logger.getLogger(Utils.class.getName());
+    String OS = System.getProperty("os.name").toLowerCase();
+    int width = Minecraft.getMinecraft().displayWidth;
+    int height = Minecraft.getMinecraft().displayHeight;
+    Proxy proxy = Minecraft.getMinecraft().getProxy();
+    long systemTime = Minecraft.getSystemTime();
 
-    public static void sendPacket(ByteArrayDataOutput buffer){
+    static void sendPacket(ByteArrayDataOutput buffer){
         Minecraft mc = Minecraft.getMinecraft();
         mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("AntiCheat", buffer.toByteArray()));
     }
 
-    public static void sendMessage(String msg) {
+    static void sendMessage(String msg) {
         Minecraft mc = Minecraft.getMinecraft();
         mc.thePlayer.addChatMessage(new ChatComponentText(("&f[&AC&f] " + msg).replace("&", "\u00a7")));
     }
 
-    public double JAVA_VERSION = getVersion();
+    double JAVA_VERSION = getVersion();
 
     static double getVersion () {
         String version = System.getProperty("java.version");
@@ -44,24 +44,85 @@ public class Utils {
         return Double.parseDouble (version.substring (0, pos));
     }
 
-    public String getRenderer(){
+    static String getRenderer(){
         return "Renderer: {0} " + GL11.glGetString(GL11.GL_RENDERER);
     }
 
-    public String getOpenGLVer(){
+    static String getOpenGLVer(){
         return "OpenGL version " + GL11.glGetString(GL11.GL_VERSION);
     }
 
-    public String getDriver(){
+    static String getDriver(){
         return "Driver Version: {0} " + Display.getVersion();
     }
 
-    public String getAdapter(){
+    static String getAdapter(){
+
         return "Driver Version: {0} " + Display.getVersion();
     }
 
+    static String getIP(){
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-    public String getSystem(){
+    static Long getUsedMemory(){
+        return Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+    }
+
+    static String getMacAdress(){
+
+        try {
+            byte[] mac = NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress();
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < mac.length; i++) {
+                sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
+            }
+            return sb.toString();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    static Long getMemory(){
+        return Runtime.getRuntime().maxMemory();
+    }
+
+    static Long getAlternativeMemory(){
+        return ((com.sun.management.OperatingSystemMXBean) ManagementFactory
+                .getOperatingSystemMXBean()).getTotalPhysicalMemorySize();
+    }
+
+    static Long getDiskSpace(){
+        return new File("/").getTotalSpace();
+    }
+
+    static List<File> getResourcePacks(){
+
+        List<File> list = new ArrayList<>();
+        File folder = new File(Minecraft.getMinecraft().mcDataDir.getAbsolutePath()+"/resourcepacks");
+        File[] listOfFiles = folder.listFiles();
+        for (File file : listOfFiles) {
+            if (file.isFile()) {
+                list.add(file);
+            }
+        }
+        return list;
+    }
+
+    static String getMinecraftPath(){
+        return Minecraft.getMinecraft().mcDataDir.getAbsolutePath();
+    }
+
+
+    static String getSystem(){
         if (isWindows()) {
             return "Windows";
         } else if (isMac()) {
@@ -75,43 +136,43 @@ public class Utils {
         }
     }
 
-    public boolean isWindows() {
+    static boolean isWindows() {
 
         return (OS.contains("win"));
 
     }
 
-    public boolean isMac() {
+    static boolean isMac() {
 
         return (OS.contains("mac"));
 
     }
 
-    public boolean isUnix() {
+    static boolean isUnix() {
 
         return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
 
     }
 
-    public boolean isSolaris() {
+    static boolean isSolaris() {
 
         return (OS.contains("sunos"));
 
     }
 
-    public long getSystemTime() {
+    static long getSystemTime() {
         return systemTime;
     }
 
-    public Proxy getProxy() {
+    static Proxy getProxy() {
         return proxy;
     }
 
-    public Integer getWidth(){
+    static Integer getWidth(){
         return width;
     }
 
-    public Integer getHeight(){
+    static Integer getHeight(){
         return height;
     }
 

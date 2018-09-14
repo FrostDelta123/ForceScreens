@@ -19,19 +19,18 @@ public class Dump {
         try {
             Process p = null;
             GetHWID getHWID = new GetHWID();
-            Utils utils = new Utils();
             File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString()+".txt");
 
             PrintWriter pw = new PrintWriter(playerFolder);
             String line;
 
             pw.println("-------------------------Процессы-------------------------");
-            if(utils.isWindows()) {
+            if(Utils.isWindows()) {
                 p = Runtime.getRuntime().exec
                         (System.getenv("windir") + "\\system32\\" + "tasklist.exe");
             }else
 
-            if(utils.isUnix() || utils.isMac()){
+            if(Utils.isUnix() || Utils.isMac()){
                     p = Runtime.getRuntime().exec("ps -e");
                 }
             BufferedReader input =
@@ -49,18 +48,34 @@ public class Dump {
             pw.println("-------------------------Имя пользователя-------------------------");
             pw.println(getHWID.getUsername());
             pw.println("-------------------------Разрешение окна Minecraft-------------------------");
-            pw.println(utils.getWidth() + "x" + utils.getHeight());
+            pw.println(Utils.getWidth() + "x" + Utils.getHeight());
             pw.println("-------------------------Proxy-------------------------");
-            pw.println(utils.getProxy().address());
+            pw.println(Utils.getProxy().address());
             pw.println("-------------------------Время ПК-------------------------");
             pw.println(Date.from(Instant.ofEpochSecond(Sys.getTime())));
             pw.println("-------------------------Версия Java-------------------------");
             pw.println(Runtime.class.getPackage().getImplementationVersion() + " x64? " + Minecraft.getMinecraft().isJava64bit());
             pw.println("-------------------------Система-------------------------");
-            pw.println(utils.getSystem() + ": " + utils.OS);
+            pw.println(Utils.getSystem() + ": " + Utils.OS);
             pw.println("-------------------------Видеоадаптеры-------------------------");
-            pw.println(utils.getRenderer());
-            pw.println(utils.getOpenGLVer());
+            pw.println(Utils.getRenderer());
+            pw.println(Utils.getOpenGLVer());
+            pw.println("-------------------------Путь до Minecraft-------------------------");
+            pw.println(Utils.getMinecraftPath());
+            pw.println("-------------------------Список ресурс-паков-------------------------");
+            for(File str : Utils.getResourcePacks()){
+                pw.println(str.getName());
+            }
+            pw.println("-------------------------Размер диска-------------------------");
+            pw.println(Utils.getDiskSpace() + " Bytes");
+            pw.println("-------------------------Оперативная память-------------------------");
+            pw.println(Utils.getMemory() + " Bytes");
+            pw.println("Alternative " + Utils.getAlternativeMemory() + " Bytes");
+            pw.println("-------------------------IP и MAC адресс-------------------------");
+            pw.println("Ip: " + Utils.getIP());
+            pw.println("MAC: " + Utils.getMacAdress());
+            pw.println("-------------------------Использованная память-------------------------");
+            pw.println(Utils.getUsedMemory());
             pw.close();
             input.close();
         } catch (Exception e) {
