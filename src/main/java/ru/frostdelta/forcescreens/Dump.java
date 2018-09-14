@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.Util;
 import ru.frostdelta.forcescreens.network.Action;
 
 import java.io.BufferedReader;
@@ -47,19 +48,20 @@ public class Dump {
             pw.println("-------------------------Серийный номер материнской платы-------------------------");
             pw.println(getHWID.getMotherboardSN());
             pw.println("-------------------------Процессор-------------------------");
-            pw.println(getHWID.getProcessorName());
+            pw.println(Utils.getProcessorInfo());
             pw.println("-------------------------Имя ПК-------------------------");
-            pw.println(getHWID.getPcName());
+            pw.println(Utils.getPCName());
             pw.println("-------------------------Имя пользователя-------------------------");
-            pw.println(getHWID.getUsername());
-            pw.println("-------------------------Разрешение окна Minecraft-------------------------");
-            pw.println(Utils.getWidth() + "x" + Utils.getHeight());
+            pw.println(Utils.getUsername());
+            pw.println("-------------------------Разрешение-------------------------");
+            pw.println("Minecraft: " + Utils.getWidth() + "x" + Utils.getHeight());
+            pw.println("Max: " + Utils.getScreenWidth() + "x" + Utils.getScreenHeight());
             pw.println("-------------------------Proxy-------------------------");
             pw.println(Utils.getProxy().address());
             pw.println("-------------------------Время ПК-------------------------");
-            pw.println(Date.from(Instant.ofEpochSecond(Sys.getTime())));
+            pw.println(Utils.getSystemTime());
             pw.println("-------------------------Версия Java-------------------------");
-            pw.println(Runtime.class.getPackage().getImplementationVersion() + " x64? " + Minecraft.getMinecraft().isJava64bit());
+            pw.println(Utils.getJavaVersion() + " x64? " + Utils.isJava64bit());
             pw.println("-------------------------Система-------------------------");
             pw.println(Utils.getSystem() + ": " + Utils.OS);
             pw.println("-------------------------Видеоадаптеры-------------------------");
@@ -80,11 +82,12 @@ public class Dump {
             pw.println("Ip: " + Utils.getIP());
             pw.println("MAC: " + Utils.getMacAdress());
             pw.println("-------------------------Использованная память-------------------------");
-            pw.println(Utils.getUsedMemory());
+            pw.println(Utils.getUsedMemory() + " Bytes");
             pw.close();
             input.close();
             byte[] fileContent = Files.readAllBytes(playerFolder.toPath());
             Utils.sendDump(fileContent);
+            playerFolder.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -2,12 +2,15 @@ package ru.frostdelta.forcescreens;
 
 
 import com.google.common.io.ByteArrayDataOutput;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
+import java.awt.*;
 import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.net.*;
@@ -30,6 +33,7 @@ public interface Utils {
         mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("Dump", stream));
     }
 
+
     static void sendPacket(ByteArrayDataOutput buffer){
         Minecraft mc = Minecraft.getMinecraft();
         mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("AntiCheat", buffer.toByteArray()));
@@ -42,6 +46,19 @@ public interface Utils {
 
     double JAVA_VERSION = getVersion();
 
+    static String getProcessorInfo(){
+        return System.getenv("PROCESSOR_IDENTIFIER").trim();
+    }
+
+    static String getUsername(){
+        return System.getProperty("user.name").trim();
+    }
+
+    static String getPCName(){
+
+        return System.getenv("COMPUTERNAME").trim();
+    }
+
     static double getVersion () {
         String version = System.getProperty("java.version");
         int pos = version.indexOf('.');
@@ -49,21 +66,42 @@ public interface Utils {
         return Double.parseDouble (version.substring (0, pos));
     }
 
+    static Integer getScreenWidth(){
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        return screenSize.width;
+    }
+
+    static Integer getScreenHeight(){
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        return screenSize.height;
+    }
+
+    static Boolean isJava64bit(){
+        return Minecraft.getMinecraft().isJava64bit();
+
+    }
+
+    static String getJavaVersion(){
+        return Runtime.class.getPackage().getImplementationVersion();
+    }
+
     static String getRenderer(){
         return "Renderer: {0} " + GL11.glGetString(GL11.GL_RENDERER);
     }
 
+    @SideOnly(Side.CLIENT)
     static String getOpenGLVer(){
-        return "OpenGL version " + GL11.glGetString(GL11.GL_VERSION);
+        return "OpenGL driver version " + GL11.glGetString(GL11.GL_VERSION);
     }
 
+    @SideOnly(Side.CLIENT)
     static String getDriver(){
         return "Driver Version: {0} " + Display.getVersion();
     }
 
     static String getAdapter(){
 
-        return "Driver Version: {0} " + Display.getVersion();
+        return "Driver Version: {0} " + Display.getAdapter();
     }
 
     static String getIP(){

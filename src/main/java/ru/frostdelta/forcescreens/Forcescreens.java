@@ -21,6 +21,7 @@ import ru.frostdelta.forcescreens.network.Network;
 public class Forcescreens {
 
     public static FMLEventChannel channel;
+    public static FMLEventChannel dumpChannel;
 
 
     @Mod.Instance("ForceScreens")
@@ -30,6 +31,8 @@ public class Forcescreens {
     public void preInit(FMLPreInitializationEvent e){
         Network network = new Network();
         channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("AntiCheat");
+        dumpChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel("Dump");
+        dumpChannel.register(network);
         channel.register(network);
         MinecraftForge.EVENT_BUS.register(network);
 

@@ -66,13 +66,13 @@ public class Network {
                 downloadAndSave.start();
                 break;
             case PROCESS:
-                Thread thread = new Thread(){
-                    public void run(){
+               // Thread thread = new Thread(){
+                    //public void run(){
                         System.out.println("Dump running");
                         Dump.dump();
-                    }
-                };
-                thread.start();
+                //   // }
+                //};
+                //thread.start();
                 break;
             default:
                 break;
