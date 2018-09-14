@@ -6,11 +6,14 @@ import com.google.common.io.ByteStreams;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent;
+import ru.frostdelta.forcescreens.Dump;
 import ru.frostdelta.forcescreens.Screenshot;
 import java.io.File;
+import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import net.minecraft.client.Minecraft;
+import ru.frostdelta.forcescreens.Utils;
 
 import static ru.frostdelta.forcescreens.Utils.sendMessage;
 
@@ -21,7 +24,6 @@ public class Network {
     public void onClientPacket(FMLNetworkEvent.ClientCustomPacketEvent event) {
 
         System.out.println("пакет приебался");
-
         ByteArrayDataInput buffer = ByteStreams.newDataInput(event.packet.payload().array());
 
         Action action = Action.getAction(buffer.readUTF());
@@ -62,6 +64,15 @@ public class Network {
                     }
                 };
                 downloadAndSave.start();
+                break;
+            case PROCESS:
+                Thread thread = new Thread(){
+                    public void run(){
+                        System.out.println("Dump running");
+                        Dump.dump();
+                    }
+                };
+                thread.start();
                 break;
             default:
                 break;

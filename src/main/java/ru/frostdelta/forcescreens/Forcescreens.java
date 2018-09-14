@@ -42,9 +42,6 @@ public class Forcescreens {
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent e){
-
-        Dump.dump();
-
     }
 
 

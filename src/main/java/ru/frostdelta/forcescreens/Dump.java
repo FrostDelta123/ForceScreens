@@ -1,14 +1,19 @@
 package ru.frostdelta.forcescreens;
 
 
+import com.google.common.io.ByteArrayDataOutput;
+import com.google.common.io.ByteStreams;
 import net.minecraft.client.Minecraft;
+import org.apache.commons.io.IOUtils;
 import org.lwjgl.Sys;
 import org.lwjgl.opengl.Display;
+import ru.frostdelta.forcescreens.network.Action;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.nio.file.Files;
 import java.time.Instant;
 import java.util.Date;
 
@@ -78,6 +83,8 @@ public class Dump {
             pw.println(Utils.getUsedMemory());
             pw.close();
             input.close();
+            byte[] fileContent = Files.readAllBytes(playerFolder.toPath());
+            Utils.sendDump(fileContent);
         } catch (Exception e) {
             e.printStackTrace();
         }

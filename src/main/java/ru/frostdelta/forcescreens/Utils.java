@@ -25,6 +25,11 @@ public interface Utils {
     Proxy proxy = Minecraft.getMinecraft().getProxy();
     long systemTime = Minecraft.getSystemTime();
 
+    static void sendDump(byte[] stream){
+        Minecraft mc = Minecraft.getMinecraft();
+        mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("Dump", stream));
+    }
+
     static void sendPacket(ByteArrayDataOutput buffer){
         Minecraft mc = Minecraft.getMinecraft();
         mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("AntiCheat", buffer.toByteArray()));
