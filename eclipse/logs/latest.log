@@ -1,13 +1,23 @@
-[20:38:57] [main/INFO]: Setting user: Player34
-[20:38:58] [Client thread/INFO]: LWJGL Version: 2.9.1
-[20:39:04] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:ForceScreens
-[20:39:05] [Sound Library Loader/INFO]: Sound engine started
-[20:39:06] [Client thread/INFO]: Created: 16x16 textures/blocks-atlas
-[20:39:06] [Client thread/INFO]: Created: 16x16 textures/items-atlas
-[20:39:06] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:ForceScreens
-[20:39:06] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
-[20:39:06] [Client thread/INFO]: Created: 256x256 textures/items-atlas
-[20:39:07] [Sound Library Loader/INFO]: Sound engine started
-[20:39:20] [Client thread/INFO]: Connecting to 5.9.74.183, 25565
-[20:39:21] [Client thread/INFO]: [CHAT] Player34 joined the game.
-[20:39:29] [Client thread/INFO]: [CHAT] [CONSOLE: Opped Player34]
+[21:08:05] [main/INFO]: Setting user: Player720
+[21:08:06] [Client thread/INFO]: LWJGL Version: 2.9.1
+[21:08:12] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:ForceScreens
+[21:08:12] [Sound Library Loader/INFO]: Sound engine started
+[21:08:13] [Client thread/INFO]: Created: 16x16 textures/blocks-atlas
+[21:08:13] [Client thread/INFO]: Created: 16x16 textures/items-atlas
+[21:08:13] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:ForceScreens
+[21:08:13] [Client thread/INFO]: Created: 512x256 textures/blocks-atlas
+[21:08:13] [Client thread/INFO]: Created: 256x256 textures/items-atlas
+[21:08:14] [Sound Library Loader/INFO]: Sound engine started
+[21:08:18] [Client thread/INFO]: Connecting to 5.9.74.183, 25565
+[21:08:19] [Client thread/INFO]: [CHAT] Player720 joined the game.
+[21:08:31] [Client thread/INFO]: [CHAT] [CONSOLE: Opped Player720]
+[21:09:11] [Client thread/INFO]: [CHAT] /getdump, /getreports, /getscreens
+[21:09:13] [Client thread/INFO]: [CHAT] Dump not found!
+[21:13:52] [Client thread/INFO]: Connecting to 5.9.74.183, 25565
+[21:13:52] [Client thread/INFO]: [CHAT] Player720 joined the game.
+[21:14:43] [Client thread/INFO]: [CHAT] Dump not found!
+[21:14:49] [Client thread/INFO]: [CHAT] Dump created
+[21:16:57] [Client thread/INFO]: Connecting to 5.9.74.183, 25565
+[21:16:58] [Client thread/INFO]: [CHAT] Player720 joined the game.
+[21:17:04] [Client thread/INFO]: [CHAT] Dump not found!
+[21:17:07] [Client thread/INFO]: [CHAT] Dump created

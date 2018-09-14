@@ -8,6 +8,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.FMLEventChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraftforge.common.MinecraftForge;
+import ru.frostdelta.forcescreens.network.Dumps;
 import ru.frostdelta.forcescreens.network.Network;
 
 
@@ -30,11 +31,13 @@ public class Forcescreens {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e){
         Network network = new Network();
+        Dumps dumps = new Dumps();
         channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("AntiCheat");
         dumpChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel("Dump");
-        dumpChannel.register(network);
+        dumpChannel.register(dumps);
         channel.register(network);
         MinecraftForge.EVENT_BUS.register(network);
+        MinecraftForge.EVENT_BUS.register(dumps);
 
     }
 
