@@ -9,11 +9,9 @@ import cpw.mods.fml.common.network.FMLNetworkEvent;
 import ru.frostdelta.forcescreens.Dump;
 import ru.frostdelta.forcescreens.Screenshot;
 import java.io.File;
-import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import net.minecraft.client.Minecraft;
-import ru.frostdelta.forcescreens.Utils;
 
 import static ru.frostdelta.forcescreens.Utils.sendMessage;
 

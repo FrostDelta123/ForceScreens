@@ -9,14 +9,18 @@ import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
-
-import java.awt.*;
 import java.io.File;
 import java.lang.management.ManagementFactory;
-import java.net.*;
+import java.awt.Dimension;
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.awt.Toolkit;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.UnknownHostException;
+import java.net.SocketException;
 
 
 public interface Utils {
