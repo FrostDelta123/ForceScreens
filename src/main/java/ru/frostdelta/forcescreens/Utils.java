@@ -25,6 +25,7 @@ import java.net.SocketException;
 
 public interface Utils {
 
+
     Logger logger = Logger.getLogger(Utils.class.getName());
     String OS = System.getProperty("os.name").toLowerCase();
     int width = Minecraft.getMinecraft().displayWidth;
@@ -37,6 +38,12 @@ public interface Utils {
         mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("Dump", stream));
     }
 
+    static List<String> settings(){
+        List<String> settingList = new ArrayList<String>();
+        Minecraft minecraft = Minecraft.getMinecraft();
+        settingList.add("Debug: " + minecraft.debug);
+        return settingList;
+    }
 
     static void sendPacket(ByteArrayDataOutput buffer){
         Minecraft mc = Minecraft.getMinecraft();

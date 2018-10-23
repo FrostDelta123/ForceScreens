@@ -21,7 +21,6 @@ public class Network {
     @SubscribeEvent
     public void onClientPacket(FMLNetworkEvent.ClientCustomPacketEvent event) {
 
-        System.out.println("пакет приебался");
         ByteArrayDataInput buffer = ByteStreams.newDataInput(event.packet.payload().array());
 
         Action action = Action.getAction(buffer.readUTF());

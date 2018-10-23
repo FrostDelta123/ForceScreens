@@ -7,22 +7,22 @@ import java.io.InputStreamReader;
 
 public class GetHWID {
 
-    private String processorName;
-    private String pcName;
-    private String username;
+    private static String processorName;
+    private static String pcName;
+    private static String username;
 
-    public String getProcessorName(){
+    public static String getProcessorName(){
         return processorName;
     }
 
-    public String getPcName(){
+    public static String getPcName(){
         return pcName;
     }
 
-    public String getUsername(){
+    public static String getUsername(){
         return username;
     }
-    public void dumpHWID(){
+    public static void dumpHWID(){
 
         processorName = System.getenv("PROCESSOR_IDENTIFIER").trim();
         pcName = System.getenv("COMPUTERNAME").trim();
@@ -30,7 +30,7 @@ public class GetHWID {
 
     }
 
-    public String getMotherboardSN() {
+    public static String getMotherboardSN() {
         String result = "";
         try {
             String line;
