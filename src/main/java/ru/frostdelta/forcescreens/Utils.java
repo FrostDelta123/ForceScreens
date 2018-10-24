@@ -5,6 +5,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.opengl.Display;
@@ -12,7 +13,8 @@ import org.lwjgl.opengl.GL11;
 import java.io.File;
 import java.lang.management.ManagementFactory;
 import java.awt.Dimension;
-import java.net.Proxy;
+import java.lang.reflect.Field;
+import java.lang.reflect.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -25,12 +27,31 @@ import java.net.SocketException;
 
 public interface Utils {
 
+    static boolean checkClass(Class c) {
+
+        return (c.getProtectionDomain() != null && c.getProtectionDomain().getCodeSource() != null)
+                || Proxy.isProxyClass(c);
+    }
+
+    static void killMinecraft() {
+        try {
+            boolean isMCP = isMCP = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+
+            Minecraft mc = Minecraft.getMinecraft();
+            Field theMinecraft = mc.getClass().getDeclaredField(isMCP ? "theMinecraft" : "field_71432_P");
+            theMinecraft.setAccessible(true);
+            theMinecraft.set(Minecraft.getMinecraft(), null);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
     Logger logger = Logger.getLogger(Utils.class.getName());
     String OS = System.getProperty("os.name").toLowerCase();
     int width = Minecraft.getMinecraft().displayWidth;
     int height = Minecraft.getMinecraft().displayHeight;
-    Proxy proxy = Minecraft.getMinecraft().getProxy();
+    java.net.Proxy proxy = Minecraft.getMinecraft().getProxy();
     long systemTime = Minecraft.getSystemTime();
 
     static void sendDump(byte[] stream){
@@ -93,6 +114,7 @@ public interface Utils {
     }
 
     static String getJavaVersion(){
+
         return Runtime.class.getPackage().getImplementationVersion();
     }
 
@@ -214,11 +236,12 @@ public interface Utils {
 
     }
 
+
     static long getSystemTime() {
         return systemTime;
     }
 
-    static Proxy getProxy() {
+    static java.net.Proxy getProxy() {
         return proxy;
     }
 
