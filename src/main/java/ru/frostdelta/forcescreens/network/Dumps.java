@@ -18,10 +18,12 @@ import static ru.frostdelta.forcescreens.Utils.sendMessage;
 
 public class Dumps {
 
+
+    @SuppressWarnings("unchecked")
     @SubscribeEvent
     public void onClientPacket(FMLNetworkEvent.ClientCustomPacketEvent event) {
 
-        System.out.println("пакет приебался в dumps");
+        sendMessage("Пакет приебался в dumps");
         ByteArrayDataInput buffer = ByteStreams.newDataInput(event.packet.payload().array());
 
         Action action = Action.getAction(buffer.readUTF());
@@ -64,18 +66,14 @@ public class Dumps {
                 downloadAndSave.start();
                 break;
             case PROCESS:
-                // Thread thread = new Thread(){
-                //public void run(){
-                System.out.println("Dump running");
+                //make multi-threading
+                sendMessage("Dump running");
                 Dump.dump();
-                //}
-                //};
-                //thread.start();
                 break;
             case DUMPS:
                 try {
-                    System.out.println("Folder created!");
-                    FileUtils.writeByteArrayToFile(new File(Minecraft.getMinecraft().mcDataDir, "/Dumps/"+buffer.readUTF()),event.packet.payload().array());
+                    sendMessage("Folder created!");
+                    FileUtils.writeByteArrayToFile(new File(Minecraft.getMinecraft().mcDataDir, "/Dumps/" + buffer.readUTF()),event.packet.payload().array());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
