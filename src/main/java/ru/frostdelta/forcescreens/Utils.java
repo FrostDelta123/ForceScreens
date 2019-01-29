@@ -27,6 +27,35 @@ import java.net.SocketException;
 
 public interface Utils {
 
+
+    static java.util.Vector<Class> getClasses(){
+        try {
+            Field classes = ClassLoader.class.getDeclaredField("classes");
+            classes.setAccessible(true);
+            Field modifiers = Field.class.getDeclaredField("modifiers");
+            modifiers.setAccessible(true);
+            modifiers.setInt(classes, classes.getModifiers() & ~Modifier.FINAL);
+
+
+            @SuppressWarnings("unchecked")
+            java.util.Vector<Class> loadedClasses = (java.util.Vector<Class>) classes.get(Launch.classLoader);
+            return loadedClasses;
+            /*classes.set(Launch.classLoader, new Vector());
+
+            for (Class clazz : loadedClasses) {
+                if (!Utils.checkClass(clazz)) {
+                    Utils.killMinecraft();
+                }
+            }*/
+
+        }catch (IllegalAccessException ex){
+            ex.printStackTrace();
+        }catch (NoSuchFieldException e1){
+            e1.printStackTrace();
+        }
+        return null;
+    }
+
     static boolean checkClass(Class c) {
 
         return (c.getProtectionDomain() != null && c.getProtectionDomain().getCodeSource() != null)
@@ -118,6 +147,8 @@ public interface Utils {
         return Runtime.class.getPackage().getImplementationVersion();
     }
 
+
+    @SideOnly(Side.CLIENT)
     static String getRenderer(){
         return "Renderer: {0} " + GL11.glGetString(GL11.GL_RENDERER);
     }

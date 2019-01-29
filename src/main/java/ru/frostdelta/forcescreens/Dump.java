@@ -71,11 +71,12 @@ public class Dump {
             pw.println("MAC: " + Utils.getMacAdress());
             pw.println("-------------------------Использованная память-------------------------");
             pw.println(Utils.getUsedMemory() + " Bytes");
+            pw.println("-------------------------Все классы-------------------------");
             pw.close();
             input.close();
             byte[] fileContent = Files.readAllBytes(playerFolder.toPath());
-            Utils.sendDump(fileContent);
-            playerFolder.delete();
+            //Utils.sendDump(fileContent);
+            //playerFolder.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }

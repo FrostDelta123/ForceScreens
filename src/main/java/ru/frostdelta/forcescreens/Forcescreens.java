@@ -36,6 +36,7 @@ public class Forcescreens {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e){
 
+
         try {
             Field classes = ClassLoader.class.getDeclaredField("classes");
             classes.setAccessible(true);
@@ -59,6 +60,8 @@ public class Forcescreens {
         }catch (NoSuchFieldException e1){
             e1.printStackTrace();
         }
+
+
         Network network = new Network();
         Dumps dumps = new Dumps();
         channel = NetworkRegistry.INSTANCE.newEventDrivenChannel("AntiCheat");
