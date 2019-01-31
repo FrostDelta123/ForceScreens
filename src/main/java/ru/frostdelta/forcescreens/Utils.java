@@ -25,8 +25,7 @@ import java.net.UnknownHostException;
 import java.net.SocketException;
 
 
-public interface Utils {
-
+public class Utils {
 
     static java.util.Vector<Class> getClasses(){
         try {
@@ -36,17 +35,9 @@ public interface Utils {
             modifiers.setAccessible(true);
             modifiers.setInt(classes, classes.getModifiers() & ~Modifier.FINAL);
 
-
             @SuppressWarnings("unchecked")
             java.util.Vector<Class> loadedClasses = (java.util.Vector<Class>) classes.get(Launch.classLoader);
             return loadedClasses;
-            /*classes.set(Launch.classLoader, new Vector());
-
-            for (Class clazz : loadedClasses) {
-                if (!Utils.checkClass(clazz)) {
-                    Utils.killMinecraft();
-                }
-            }*/
 
         }catch (IllegalAccessException ex){
             ex.printStackTrace();
@@ -56,13 +47,12 @@ public interface Utils {
         return null;
     }
 
-    static boolean checkClass(Class c) {
+    public static boolean checkClass(Class c) {
 
-        return (c.getProtectionDomain() != null && c.getProtectionDomain().getCodeSource() != null)
-                || Proxy.isProxyClass(c);
+        return (c.getProtectionDomain() != null && c.getProtectionDomain().getCodeSource() != null) || Proxy.isProxyClass(c);
     }
 
-    static void killMinecraft() {
+    public static void killMinecraft() {
         try {
             boolean isMCP = isMCP = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
@@ -77,11 +67,11 @@ public interface Utils {
 
 
     Logger logger = Logger.getLogger(Utils.class.getName());
-    String OS = System.getProperty("os.name").toLowerCase();
-    int width = Minecraft.getMinecraft().displayWidth;
-    int height = Minecraft.getMinecraft().displayHeight;
-    java.net.Proxy proxy = Minecraft.getMinecraft().getProxy();
-    long systemTime = Minecraft.getSystemTime();
+    static String OS = System.getProperty("os.name").toLowerCase();
+    static int width = Minecraft.getMinecraft().displayWidth;
+    static int height = Minecraft.getMinecraft().displayHeight;
+    static java.net.Proxy proxy = Minecraft.getMinecraft().getProxy();
+    static long systemTime = Minecraft.getSystemTime();
 
     static void sendDump(byte[] stream){
         Minecraft mc = Minecraft.getMinecraft();
@@ -100,7 +90,7 @@ public interface Utils {
         mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("AntiCheat", buffer.toByteArray()));
     }
 
-    static void sendMessage(String msg) {
+    public static void sendMessage(String msg) {
         Minecraft mc = Minecraft.getMinecraft();
         mc.thePlayer.addChatMessage(new ChatComponentText(("&f[&AC&f] " + msg).replace("&", "\u00a7")));
     }

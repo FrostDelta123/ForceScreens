@@ -1,9 +1,9 @@
-package ru.frostdelta.forcescreens;
+package ru.frostdelta.forcescreens.vector;
 
 import static ru.frostdelta.forcescreens.Utils.checkClass;
 import static ru.frostdelta.forcescreens.Utils.killMinecraft;
 
-public class Vector extends java.util.Vector {
+public class EboboVector extends java.util.Vector {
 
     @Override
     public synchronized void addElement(Object obj) {
@@ -15,6 +15,7 @@ public class Vector extends java.util.Vector {
                 killMinecraft();
             }
         } catch (Exception ex) {
+            System.out.println("попался пидорас " + obj);
             super.addElement(obj);
         }
     }

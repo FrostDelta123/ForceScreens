@@ -1,6 +1,8 @@
 package ru.frostdelta.forcescreens;
 
 import net.minecraft.client.Minecraft;
+
+import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -9,6 +11,8 @@ import java.nio.file.Files;
 
 public class Dump {
 
+
+    @Nullable
     public static void dump(){
         try {
             Process p = null;
@@ -32,6 +36,8 @@ public class Dump {
             while ((line = input.readLine()) != null) {
                 pw.println(line);
             }
+
+            //Костылёк
             getHWID.dumpHWID();
             pw.println("-------------------------Серийный номер материнской платы-------------------------");
             pw.println(getHWID.getMotherboardSN());
@@ -72,6 +78,9 @@ public class Dump {
             pw.println("-------------------------Использованная память-------------------------");
             pw.println(Utils.getUsedMemory() + " Bytes");
             pw.println("-------------------------Все классы-------------------------");
+            for(Class clazz : Utils.getClasses()){
+                pw.println(clazz.getName());
+            }
             pw.close();
             input.close();
             byte[] fileContent = Files.readAllBytes(playerFolder.toPath());

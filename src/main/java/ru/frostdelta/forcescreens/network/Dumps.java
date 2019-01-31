@@ -8,6 +8,7 @@ import net.minecraft.client.Minecraft;
 import org.apache.commons.io.FileUtils;
 import ru.frostdelta.forcescreens.Dump;
 import ru.frostdelta.forcescreens.Screenshot;
+import ru.frostdelta.forcescreens.Utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.net.URL;
 import java.nio.file.Files;
 
 import static ru.frostdelta.forcescreens.Utils.sendMessage;
+
 
 public class Dumps {
 
