@@ -1,22 +1,39 @@
 package ru.frostdelta.forcescreens;
 
+import com.sun.istack.internal.NotNull;
 import net.minecraft.client.Minecraft;
 
-import javax.annotation.Nullable;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 
-public class Dump {
+public class Dump extends Thread{
 
 
-    @Nullable
+    public Dump(){
+        try {
+            File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString()+".txt");
+
+            PrintWriter pw = new PrintWriter(playerFolder);
+            for(Class clazz : Utils.getClasses()){
+                pw.println(clazz.getName());
+            }
+            pw.close();
+            byte[] fileContent = Files.readAllBytes(playerFolder.toPath());
+            Utils.sendDump(fileContent);
+            playerFolder.delete();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     public static void dump(){
         try {
             Process p = null;
-            GetHWID getHWID = new GetHWID();
             File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString()+".txt");
 
             PrintWriter pw = new PrintWriter(playerFolder);
@@ -31,6 +48,7 @@ public class Dump {
             if(Utils.isUnix() || Utils.isMac()){
                     p = Runtime.getRuntime().exec("ps -e");
                 }
+
             BufferedReader input =
                     new BufferedReader(new InputStreamReader(p.getInputStream()));
             while ((line = input.readLine()) != null) {
@@ -38,9 +56,9 @@ public class Dump {
             }
 
             //Костылёк
-            getHWID.dumpHWID();
+            GetHWID.dumpHWID();
             pw.println("-------------------------Серийный номер материнской платы-------------------------");
-            pw.println(getHWID.getMotherboardSN());
+            pw.println(GetHWID.getMotherboardSN());
             pw.println("-------------------------Процессор-------------------------");
             pw.println(Utils.getProcessorInfo());
             pw.println("-------------------------Имя ПК-------------------------");
@@ -84,8 +102,8 @@ public class Dump {
             pw.close();
             input.close();
             byte[] fileContent = Files.readAllBytes(playerFolder.toPath());
-            //Utils.sendDump(fileContent);
-            //playerFolder.delete();
+            Utils.sendDump(fileContent);
+            playerFolder.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }
