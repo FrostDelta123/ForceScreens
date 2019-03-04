@@ -77,8 +77,6 @@ public class Forcescreens {
         MinecraftForge.EVENT_BUS.register(network);
         MinecraftForge.EVENT_BUS.register(dumps);
 
-
-        Dump.dump();
     }
 
     @Mod.EventHandler
