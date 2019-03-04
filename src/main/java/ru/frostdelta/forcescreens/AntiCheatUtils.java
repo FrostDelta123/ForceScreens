@@ -1,6 +1,7 @@
 package ru.frostdelta.forcescreens;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -9,6 +10,12 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 public class AntiCheatUtils {
 
     static Minecraft mc = Minecraft.getMinecraft();
+
+
+    @SubscribeEvent
+    public void onEnter(PlayerEvent.PlayerLoggedInEvent event){
+        new Dump().start();
+    }
 
     @SubscribeEvent
     public void onAttack(AttackEntityEvent event) {
