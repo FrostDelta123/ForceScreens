@@ -1,6 +1,7 @@
 package ru.frostdelta.forcescreens;
 
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
@@ -74,8 +75,10 @@ public class Forcescreens {
         dumpChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel("Dump");
         dumpChannel.register(dumps);
         channel.register(network);
+        //MinecraftForge.EVENT_BUS.register(new AntiCheatUtils());
         MinecraftForge.EVENT_BUS.register(network);
         MinecraftForge.EVENT_BUS.register(dumps);
+        FMLCommonHandler.instance().bus().register(new AntiCheatUtils());
 
     }
 
