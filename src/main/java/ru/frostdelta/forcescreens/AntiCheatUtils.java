@@ -1,24 +1,30 @@
 package ru.frostdelta.forcescreens;
 
+import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
+import cpw.mods.fml.common.network.FMLNetworkEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 public class AntiCheatUtils {
 
-    static Minecraft mc = Minecraft.getMinecraft();
-
-
     @SubscribeEvent
-    public void onEnter(PlayerEvent.PlayerLoggedInEvent event){
+    @SideOnly(Side.CLIENT)
+    public void onEnter(FMLNetworkEvent.ClientConnectedToServerEvent event){
         new Dump().start();
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onAttack(AttackEntityEvent event) {
+        Minecraft mc = Minecraft.getMinecraft();
         if (mc.objectMouseOver != null) {
             MovingObjectPosition mouse = mc.objectMouseOver;
             if (mouse.entityHit != null && event.target != null) {
@@ -30,11 +36,13 @@ public class AntiCheatUtils {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onClick(PlayerInteractEvent event) {
+        Minecraft mc = Minecraft.getMinecraft();
         if (event.action == PlayerInteractEvent.Action.LEFT_CLICK_BLOCK || event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK) {
             if (mc.objectMouseOver != null) {
                 MovingObjectPosition mouse = mc.objectMouseOver;
-                if (!((mouse.blockX == event.x) && (mouse.blockY == mouse.blockY) && (mouse.blockZ == event.z))) {
+                if (!((mouse.blockX == event.x) && (mouse.blockZ == event.z))) {
                     event.setCanceled(true);
                 }
             }
