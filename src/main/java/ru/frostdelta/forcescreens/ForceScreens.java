@@ -9,32 +9,26 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.FMLEventChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
 import ru.frostdelta.forcescreens.network.Dumps;
 import ru.frostdelta.forcescreens.network.Network;
-import ru.frostdelta.forcescreens.vector.EboboVector;
-
-import javax.swing.*;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 
 @Mod(
         modid = "ForceScreens",
         name = "ForceScreens",
-        version = "2.1",
+        version = "3.0",
         dependencies = "after:Minecraft Forge",
         canBeDeactivated = false
 )
-public class Forcescreens {
+public class ForceScreens {
 
     private static FMLEventChannel channel;
     private static FMLEventChannel dumpChannel;
 
 
     @Mod.Instance("ForceScreens")
-    public static Forcescreens MOD;
+    public static ForceScreens MOD;
 
 
     @SuppressWarnings("unchecked")

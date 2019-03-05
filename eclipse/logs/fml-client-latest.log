@@ -216,7 +216,7 @@ Details:
 [22:00:02] [Client thread/TRACE] [FML/]: Recursing into package ru
 [22:00:02] [Client thread/TRACE] [FML/]: Recursing into package ru.frostdelta
 [22:00:02] [Client thread/TRACE] [FML/]: Recursing into package ru.frostdelta.forcescreens
-[22:00:02] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (ru.frostdelta.forcescreens.Forcescreens) - loading
+[22:00:02] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (ru.frostdelta.forcescreens.ForceScreens) - loading
 [22:00:02] [Client thread/TRACE] [ForceScreens/]: Parsed dependency info : [] [Minecraft Forge] []
 [22:00:02] [Client thread/TRACE] [FML/]: Recursing into package ru.frostdelta.forcescreens.network
 [22:00:02] [Client thread/TRACE] [FML/]: Recursing into package ru.frostdelta.forcescreens.vector

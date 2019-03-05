@@ -17,9 +17,9 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "1.0"
+version = "3.0"
 group= "ru.frostdelta.forcescreens" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "Forcescreens"
+archivesBaseName = "ForceScreens"
 
 minecraft {
     version = "1.7.10-10.13.4.1558-1.7.10"
