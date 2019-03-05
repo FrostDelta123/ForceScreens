@@ -1,6 +1,5 @@
 package ru.frostdelta.forcescreens;
 
-import com.sun.istack.internal.NotNull;
 import net.minecraft.client.Minecraft;
 
 import java.io.BufferedReader;
