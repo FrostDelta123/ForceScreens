@@ -11,12 +11,15 @@ import java.nio.file.Files;
 public class Dump extends Thread{
 
 
-    public Dump(){
+    @Override
+    public void run() {
         try {
-            File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString()+".txt");
+
+            Thread.sleep(2000);
+            File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString() + ".txt");
 
             PrintWriter pw = new PrintWriter(playerFolder);
-            for(Class clazz : Utils.getClasses()){
+            for (Class clazz : Utils.getClasses()) {
                 pw.println(clazz.getName());
             }
             pw.close();
@@ -27,8 +30,6 @@ public class Dump extends Thread{
             e.printStackTrace();
         }
     }
-
-
 
     public static void dump(){
         try {
