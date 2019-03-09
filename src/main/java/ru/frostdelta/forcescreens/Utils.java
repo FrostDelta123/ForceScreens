@@ -10,19 +10,20 @@ import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+
+import java.awt.*;
 import java.io.File;
 import java.lang.management.ManagementFactory;
-import java.awt.Dimension;
 import java.lang.reflect.Field;
-import java.lang.reflect.*;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.Proxy;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.awt.Toolkit;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.UnknownHostException;
-import java.net.SocketException;
 
 
 public class Utils {
@@ -54,7 +55,7 @@ public class Utils {
 
     public static void killMinecraft() {
         try {
-            boolean isMCP = isMCP = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+            boolean isMCP = (boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
 
             Minecraft mc = Minecraft.getMinecraft();
             Field theMinecraft = mc.getClass().getDeclaredField(isMCP ? "theMinecraft" : "field_71432_P");

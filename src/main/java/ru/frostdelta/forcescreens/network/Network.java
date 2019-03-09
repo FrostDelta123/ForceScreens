@@ -1,17 +1,16 @@
 package ru.frostdelta.forcescreens.network;
 
 import com.google.common.io.ByteArrayDataInput;
-import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
-
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent;
+import net.minecraft.client.Minecraft;
 import ru.frostdelta.forcescreens.Dump;
 import ru.frostdelta.forcescreens.Screenshot;
+
 import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
-import net.minecraft.client.Minecraft;
 
 import static ru.frostdelta.forcescreens.Utils.sendMessage;
 
@@ -63,8 +62,7 @@ public class Network {
                 downloadAndSave.start();
                 break;
             case PROCESS:
-                        sendMessage("Dump running");
-                        Dump.dump();
+                new Dump().start();
                 break;
             default:
                 break;

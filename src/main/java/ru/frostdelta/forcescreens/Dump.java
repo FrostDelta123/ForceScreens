@@ -16,16 +16,12 @@ public class Dump extends Thread{
         try {
 
             Thread.sleep(2000);
-            File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString() + ".txt");
+            //File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString() + ".txt");
 
-            PrintWriter pw = new PrintWriter(playerFolder);
+            //PrintWriter pw = new PrintWriter(playerFolder);
             for (Class clazz : Utils.getClasses()) {
-                pw.println(clazz.getName());
+                Utils.sendDump(clazz.getName().getBytes());
             }
-            pw.close();
-            byte[] fileContent = Files.readAllBytes(playerFolder.toPath());
-            Utils.sendDump(fileContent);
-            playerFolder.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }
