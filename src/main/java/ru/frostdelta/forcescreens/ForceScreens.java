@@ -17,7 +17,7 @@ import ru.frostdelta.forcescreens.network.Network;
 @Mod(
         modid = "ForceScreens",
         name = "ForceScreens",
-        version = "3.0",
+        version = "4.0",
         dependencies = "after:Minecraft Forge",
         canBeDeactivated = false
 )
