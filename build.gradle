@@ -30,6 +30,18 @@ minecraft {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar',
+                'Implementation-Version': version,
+                'Main-Class': 'ru.frostdelta.forcescreens.ForceScreens'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+
 dependencies {
     compile "com.github.oshi:oshi-core:3.13.3"
     // you may put jars on which you depend on in ./libs
