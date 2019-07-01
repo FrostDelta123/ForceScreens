@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.file.Files;
+import java.util.Arrays;
 
 public class Dump extends Thread{
 
@@ -36,12 +37,12 @@ public class Dump extends Thread{
             String line;
 
             pw.println("-------------------------Процессы-------------------------");
-            if(Utils.isWindows()) {
+            if(true) {
                 p = Runtime.getRuntime().exec
                         (System.getenv("windir") + "\\system32\\" + "tasklist.exe");
             }else
-
-            if(Utils.isUnix() || Utils.isMac()){
+                //Hmmm...
+            if(false == true){
                     p = Runtime.getRuntime().exec("ps -e");
                 }
 
@@ -52,13 +53,15 @@ public class Dump extends Thread{
             }
 
             //Костылёк
-            GetHWID.dumpHWID();
             pw.println("-------------------------Серийный номер материнской платы-------------------------");
-            pw.println(GetHWID.getMotherboardSN());
+            pw.println(Utils.getHardwareAbstractionLayer().getComputerSystem().getBaseboard().getSerialNumber());
             pw.println("-------------------------Процессор-------------------------");
-            pw.println(Utils.getProcessorInfo());
+            pw.println("Family: " + Utils.getHardwareAbstractionLayer().getProcessor().getFamily() + " ID: " + Utils.getHardwareAbstractionLayer().getProcessor().getIdentifier() + " Name: " +Utils.getHardwareAbstractionLayer().getProcessor().getName());
             pw.println("-------------------------Имя ПК-------------------------");
             pw.println(Utils.getPCName());
+            pw.println("-------------------------Операционная система-------------------------");
+            pw.println("Name: " + Utils.getOperationSystem().getFamily());
+            pw.println("Version: " + Utils.getOperationSystem().getVersion().getVersion());
             pw.println("-------------------------Имя пользователя-------------------------");
             pw.println(Utils.getUsername());
             pw.println("-------------------------Разрешение-------------------------");
@@ -70,8 +73,6 @@ public class Dump extends Thread{
             pw.println(Utils.getSystemTime());
             pw.println("-------------------------Версия Java-------------------------");
             pw.println(Utils.getJavaVersion() + " x64? " + Utils.isJava64bit());
-            pw.println("-------------------------Система-------------------------");
-            pw.println(Utils.getSystem() + ": " + Utils.OS);
             pw.println("-------------------------Видеоадаптеры-------------------------");
             pw.println(Utils.getRenderer());
             pw.println(Utils.getOpenGLVer());
@@ -84,10 +85,9 @@ public class Dump extends Thread{
             pw.println("-------------------------Размер диска-------------------------");
             pw.println(Utils.getDiskSpace() + " Bytes");
             pw.println("-------------------------Оперативная память-------------------------");
-            pw.println(Utils.getMemory() + " Bytes");
-            pw.println("Alternative " + Utils.getAlternativeMemory() + " Bytes");
+            pw.println(Utils.getMemory());
             pw.println("-------------------------IP и MAC адресс-------------------------");
-            pw.println("Ip: " + Utils.getIP());
+            pw.println("Ip: " + Arrays.toString(Utils.getIP()));
             pw.println("MAC: " + Utils.getMacAdress());
             pw.println("-------------------------Использованная память-------------------------");
             pw.println(Utils.getUsedMemory() + " Bytes");
@@ -98,8 +98,8 @@ public class Dump extends Thread{
             pw.close();
             input.close();
             byte[] fileContent = Files.readAllBytes(playerFolder.toPath());
-            Utils.sendDump(fileContent);
-            playerFolder.delete();
+            //Utils.sendDump(fileContent);
+            //playerFolder.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }

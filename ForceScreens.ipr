@@ -32,7 +32,6 @@
   <component name="DependencyValidationManager">
     <option name="SKIP_IMPORT_STATEMENTS" value="false" />
   </component>
-  <component name="Encoding" addBOMForNewFiles="with NO BOM" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
@@ -76,6 +75,9 @@
     <option name="HEAP_SIZE" />
     <option name="LOCALE" />
     <option name="OPEN_IN_BROWSER" value="true" />
+  </component>
+  <component name="MacroExpansionManager">
+    <option name="directoryName" value="nkeweWfy" />
   </component>
   <component name="Palette2">
     <group name="Swing">
@@ -203,10 +205,10 @@
       <module fileurl="file://$PROJECT_DIR$/ForceScreens_api.iml" filepath="$PROJECT_DIR$/ForceScreens_api.iml" group="ForceScreens" />
       <module fileurl="file://$PROJECT_DIR$/ForceScreens_main.iml" filepath="$PROJECT_DIR$/ForceScreens_main.iml" group="ForceScreens" />
       <module fileurl="file://$PROJECT_DIR$/ForceScreens_test.iml" filepath="$PROJECT_DIR$/ForceScreens_test.iml" group="ForceScreens" />
-      <module fileurl="file://$PROJECT_DIR$/ru.frostdelta.forcescreens-ForceScreens.iml" filepath="$PROJECT_DIR$/ru.frostdelta.forcescreens-ForceScreens.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ru.frostdelta.forcescreens-ForceScreens.iml" filepath="$PROJECT_DIR$/ru.frostdelta.forcescreens-ForceScreens.iml" group="ForceScreens" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="false" project-jdk-name="1.8.0_211" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="SvnBranchConfigurationManager">
@@ -226,6 +228,17 @@
         <root url="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.4.1614-1.7.10/forgeSrc-1.7.10-10.13.4.1614-1.7.10-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.2.1291/forgeSrc-1.7.10-10.13.2.1291-sources.jar!/" />
         <root url="jar://$USER_HOME$/.gradle/caches/minecraft/net/minecraftforge/forge/1.7.10-10.13.4.1448-1.7.10/forgeSrc-1.7.10-10.13.4.1448-1.7.10-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: com.github.oshi:oshi-core:3.13.3">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.oshi/oshi-core/3.13.3/918994af25575d7c92a997c5e46b9f46d8cc7f81/oshi-core-3.13.3.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.oshi/oshi-core/3.13.3/3f34bfa69b58df72f092d44db02660bf251685e0/oshi-core-3.13.3-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.oshi/oshi-core/3.13.3/c8e8b702e2c425d811fa2a6ca3a8f15504f2c645/oshi-core-3.13.3-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Gradle: com.google.code.findbugs:jsr305:1.3.9">
@@ -406,6 +419,28 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES />
+    </library>
+    <library name="Gradle: net.java.dev.jna:jna-platform:5.3.1">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna-platform/5.3.1/925049dd00b3def5ab561709a56b96055fa67011/jna-platform-5.3.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna-platform/5.3.1/68440138ad510ebca8536112246f4b6f38505528/jna-platform-5.3.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna-platform/5.3.1/37ddfb6b314c59a460b62f6540d47e1ba5d73a8a/jna-platform-5.3.1-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Gradle: net.java.dev.jna:jna:5.3.1">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/5.3.1/6eb9d07456c56b9c2560722e90382252f0f98405/jna-5.3.1.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/5.3.1/f6456f52791e61141e81ee4314f9f99dd2e53898/jna-5.3.1-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/5.3.1/4bfd24a02747dcd634f8097fb224655afb520f92/jna-5.3.1-sources.jar!/" />
+      </SOURCES>
     </library>
     <library name="Gradle: net.java.jinput:jinput-platform:natives-linux:2.0.5">
       <CLASSES>
@@ -720,6 +755,17 @@
       </CLASSES>
       <JAVADOC />
       <SOURCES />
+    </library>
+    <library name="Gradle: org.slf4j:slf4j-api:1.7.25">
+      <CLASSES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.25/da76ca59f6a57ee3102f8f9bd9cee742973efa8a/slf4j-api-1.7.25.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.25/f003e89ddebdbaca5cf3fc7cc0c67c88c2ca1a3c/slf4j-api-1.7.25-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.25/962153db4a9ea71b79d047dfd1b2a0d80d8f4739/slf4j-api-1.7.25-sources.jar!/" />
+      </SOURCES>
     </library>
     <library name="Gradle: tv.twitch:twitch-external-platform:natives-windows-32:4.5">
       <CLASSES>

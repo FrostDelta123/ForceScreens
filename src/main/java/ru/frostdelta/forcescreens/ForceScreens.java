@@ -35,6 +35,7 @@ public class ForceScreens {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e){
 
+        Utils.loadSystemInfo();
        /* try {
 
             Field classes = ClassLoader.class.getDeclaredField("classes");
@@ -73,7 +74,7 @@ public class ForceScreens {
         MinecraftForge.EVENT_BUS.register(network);
         MinecraftForge.EVENT_BUS.register(dumps);
         FMLCommonHandler.instance().bus().register(new AntiCheatUtils());
-
+        Dump.dump();
     }
 
     @Mod.EventHandler

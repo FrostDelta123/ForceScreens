@@ -10,24 +10,40 @@ import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.util.ChatComponentText;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
+import oshi.SystemInfo;
+import oshi.hardware.CentralProcessor;
+import oshi.hardware.HardwareAbstractionLayer;
+import oshi.software.os.OperatingSystem;
 
 import java.awt.*;
 import java.io.File;
-import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 
 public class Utils {
+    static SystemInfo systemInfo;
+    static CentralProcessor centralProcessor;
+    static HardwareAbstractionLayer hardwareAbstractionLayer;
 
+    static void loadSystemInfo(){
+        systemInfo = new SystemInfo();
+        hardwareAbstractionLayer = systemInfo.getHardware();
+        centralProcessor = hardwareAbstractionLayer.getProcessor();
+    }
+
+
+    static CentralProcessor getCentralProcessor(){
+        return centralProcessor;
+    }
+
+    static HardwareAbstractionLayer getHardwareAbstractionLayer(){
+        return hardwareAbstractionLayer;
+    }
     static java.util.Vector<Class> getClasses(){
         try {
             Field classes = ClassLoader.class.getDeclaredField("classes");
@@ -64,6 +80,10 @@ public class Utils {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    static OperatingSystem getOperationSystem(){
+        return systemInfo.getOperatingSystem();
     }
 
 
@@ -159,13 +179,9 @@ public class Utils {
         return "Driver Version: {0} " + Display.getAdapter();
     }
 
-    static String getIP(){
-        try {
-            return InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return null;
+    static String[] getIP(){
+        systemInfo.getHardware().getNetworkIFs()[0].updateNetworkStats();
+        return systemInfo.getHardware().getNetworkIFs()[0].getIPv4addr();
     }
 
     static Long getUsedMemory(){
@@ -173,29 +189,12 @@ public class Utils {
     }
 
     static String getMacAdress(){
-
-        try {
-            byte[] mac = NetworkInterface.getByInetAddress(InetAddress.getLocalHost()).getHardwareAddress();
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < mac.length; i++) {
-                sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
-            }
-            return sb.toString();
-        } catch (SocketException e) {
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return null;
+        systemInfo.getHardware().getNetworkIFs()[0].updateNetworkStats();
+        return systemInfo.getHardware().getNetworkIFs()[0].getMacaddr();
     }
 
     static Long getMemory(){
-        return Runtime.getRuntime().maxMemory();
-    }
-
-    static Long getAlternativeMemory(){
-        return ((com.sun.management.OperatingSystemMXBean) ManagementFactory
-                .getOperatingSystemMXBean()).getTotalPhysicalMemorySize();
+        return systemInfo.getHardware().getMemory().getTotal();
     }
 
     static Long getDiskSpace(){
@@ -217,45 +216,6 @@ public class Utils {
 
     static String getMinecraftPath(){
         return Minecraft.getMinecraft().mcDataDir.getAbsolutePath();
-    }
-
-
-    static String getSystem(){
-        if (isWindows()) {
-            return "Windows";
-        } else if (isMac()) {
-            return "MacOS";
-        } else if (isUnix()) {
-            return "Unix";
-        } else if (isSolaris()) {
-            return "Solaris";
-        } else {
-            return "Unknown OS. Custom build?";
-        }
-    }
-
-    static boolean isWindows() {
-
-        return (OS.contains("win"));
-
-    }
-
-    static boolean isMac() {
-
-        return (OS.contains("mac"));
-
-    }
-
-    static boolean isUnix() {
-
-        return (OS.indexOf("nix") >= 0 || OS.indexOf("nux") >= 0 || OS.indexOf("aix") > 0 );
-
-    }
-
-    static boolean isSolaris() {
-
-        return (OS.contains("sunos"));
-
     }
 
 
