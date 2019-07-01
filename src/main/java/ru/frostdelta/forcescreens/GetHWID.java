@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 
+
+@Deprecated
 public class GetHWID {
 
     private static String processorName;
@@ -30,6 +32,8 @@ public class GetHWID {
 
     }
 
+
+    @Deprecated
     public static String getMotherboardSN() {
         String result = "";
         try {
