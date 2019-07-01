@@ -21,9 +21,7 @@ public class Network {
     public void onClientPacket(FMLNetworkEvent.ClientCustomPacketEvent event) {
 
         ByteArrayDataInput buffer = ByteStreams.newDataInput(event.packet.payload().array());
-
         Action action = Action.getAction(buffer.readUTF());
-
         switch (action) {
             case SCREENSHOT:
                 new Screenshot(buffer.readUTF()).start();
