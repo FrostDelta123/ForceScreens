@@ -199,7 +199,7 @@ public class Utils {
     public static String sendToHaste(List<? extends Class> input) throws IOException {
 
         Gson gson = new Gson();
-        HttpURLConnection connection = (HttpURLConnection) new URL("https://hastebin.com/documents").openConnection();
+        HttpURLConnection connection = (HttpURLConnection) new URL("https://paste.divinecode.org/documents").openConnection();
         connection.setDoInput(true);
         connection.setDoOutput(true);
         connection.setUseCaches(false);
@@ -211,7 +211,8 @@ public class Utils {
         try (DataOutputStream dos = new DataOutputStream(connection.getOutputStream())){
 
             for(Class in : input) {
-                dos.write(in.getName().getBytes(StandardCharsets.UTF_8));
+                String className = in.getName() + "\n";
+                dos.write(className.getBytes(StandardCharsets.UTF_8));
             }
             dos.flush();
         }
@@ -223,7 +224,7 @@ public class Utils {
         }
         connection.disconnect();
 
-        return "https://hastebin.com/" +  gson.fromJson(result, JsonObject.class).get("key").getAsString();
+        return "https://paste.divinecode.org/" +  gson.fromJson(result, JsonObject.class).get("key").getAsString();
     }
 
     static String getMinecraftPath(){
