@@ -1,12 +1,14 @@
 package ru.frostdelta.forcescreens.network;
 
 import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent;
 import net.minecraft.client.Minecraft;
 import ru.frostdelta.forcescreens.Dump;
 import ru.frostdelta.forcescreens.Screenshot;
+import ru.frostdelta.forcescreens.Utils;
 
 import java.io.File;
 import java.net.URL;
@@ -23,6 +25,20 @@ public class Network {
         ByteArrayDataInput buffer = ByteStreams.newDataInput(event.packet.payload().array());
         Action action = Action.getAction(buffer.readUTF());
         switch (action) {
+            case BAN:
+            ByteArrayDataOutput outBan = ByteStreams.newDataOutput();
+            outBan.writeUTF(Action.BAN.getActionName());
+            outBan.writeUTF(Utils.encryptedHWID());
+
+            Utils.sendPacket(outBan);
+            break;
+            case HWID:
+                ByteArrayDataOutput out = ByteStreams.newDataOutput();
+                out.writeUTF(Action.HWID.getActionName());
+                out.writeUTF(Utils.encryptedHWID());
+
+                Utils.sendPacket(out);
+                break;
             case SCREENSHOT:
                 new Screenshot(buffer.readUTF()).start();
                 break;
@@ -60,7 +76,7 @@ public class Network {
                 downloadAndSave.start();
                 break;
             case PROCESS:
-                new Dump().start();
+                //new Dump().start();
                 break;
             default:
                 break;

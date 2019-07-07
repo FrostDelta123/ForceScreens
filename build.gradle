@@ -1,6 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
         maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
@@ -20,15 +21,16 @@ apply plugin: 'forge'
 
 version = "4.0"
 group= "ru.frostdelta.forcescreens" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = "ForceScreens"
+archivesBaseName = "ForceScreensPremium"
 
 minecraft {
-    version = "1.7.10-10.13.4.1558-1.7.10"
+    version = "1.7.10-10.13.4.1614-1.7.10"
     runDir = "idea"
 }
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
+
 
 task fatJar(type: Jar) {
     manifest {
@@ -41,22 +43,20 @@ task fatJar(type: Jar) {
     with jar
 }
 
+configurations {
+    embed
+    compile.extendsFrom(embed)
+}
 
 dependencies {
-    compile "com.github.oshi:oshi-core:3.13.3"
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-      
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
+    embed "com.github.oshi:oshi-core:3.13.3"
+    embed "com.rabbitmq:amqp-client:4.0.0"
+    embed "org.apache.commons:commons-lang3:3.0"
+    embed "org.slf4j:slf4j-simple:1.7.21"
+}
 
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
+jar {
+    from configurations.embed.collect { it.isDirectory() ? it : zipTree(it) }
 }
 
 processResources

@@ -11,12 +11,18 @@ import cpw.mods.fml.common.network.FMLEventChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import ru.frostdelta.forcescreens.network.Dumps;
+import ru.frostdelta.forcescreens.network.Locker;
 import ru.frostdelta.forcescreens.network.Network;
+
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 
 @Mod(
-        modid = "ForceScreens",
-        name = "ForceScreens",
+        modid = "ForceScreensPremium",
+        name = "ForceScreensPremium",
         version = "4.0",
         dependencies = "after:Minecraft Forge",
         canBeDeactivated = false
@@ -25,17 +31,16 @@ public class ForceScreens {
 
     private static FMLEventChannel channel;
     private static FMLEventChannel dumpChannel;
+    private static FMLEventChannel locker;
 
 
-    @Mod.Instance("ForceScreens")
+    @Mod.Instance("ForceScreensPremium")
     public static ForceScreens MOD;
 
 
     @SuppressWarnings("unchecked")
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e){
-
-        Utils.loadSystemInfo();
        /* try {
 
             Field classes = ClassLoader.class.getDeclaredField("classes");
@@ -70,15 +75,18 @@ public class ForceScreens {
         dumpChannel = NetworkRegistry.INSTANCE.newEventDrivenChannel("Dump");
         dumpChannel.register(dumps);
         channel.register(network);
+        locker = NetworkRegistry.INSTANCE.newEventDrivenChannel("Locker");
+        locker.register(new Locker());
+
         //MinecraftForge.EVENT_BUS.register(new AntiCheatUtils());
         MinecraftForge.EVENT_BUS.register(network);
         MinecraftForge.EVENT_BUS.register(dumps);
         FMLCommonHandler.instance().bus().register(new AntiCheatUtils());
-        Dump.dump();
+        //Dump.dump();
     }
 
     @Mod.EventHandler
-    public void loadComplete(FMLLoadCompleteEvent e) {
+    public void loadComplete(FMLLoadCompleteEvent e){
         new ClassPathChecker().start();
     }
 

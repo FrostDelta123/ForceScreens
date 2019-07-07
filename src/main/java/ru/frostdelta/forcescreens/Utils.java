@@ -2,49 +2,42 @@ package ru.frostdelta.forcescreens;
 
 
 import com.google.common.io.ByteArrayDataOutput;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraft.network.play.client.C17PacketCustomPayload;
 import net.minecraft.util.ChatComponentText;
-import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import oshi.SystemInfo;
-import oshi.hardware.CentralProcessor;
 import oshi.hardware.HardwareAbstractionLayer;
 import oshi.software.os.OperatingSystem;
 
 import java.awt.*;
-import java.io.File;
+import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.Proxy;
+import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 public class Utils {
-    static SystemInfo systemInfo;
-    static CentralProcessor centralProcessor;
-    static HardwareAbstractionLayer hardwareAbstractionLayer;
-
-    static void loadSystemInfo(){
-        systemInfo = new SystemInfo();
-        hardwareAbstractionLayer = systemInfo.getHardware();
-        centralProcessor = hardwareAbstractionLayer.getProcessor();
-    }
-
-
-    static CentralProcessor getCentralProcessor(){
-        return centralProcessor;
-    }
 
     static HardwareAbstractionLayer getHardwareAbstractionLayer(){
-        return hardwareAbstractionLayer;
+        return new SystemInfo().getHardware();
     }
-    static java.util.Vector<Class> getClasses(){
+    public static java.util.Vector<Class> getClasses(){
         try {
             Field classes = ClassLoader.class.getDeclaredField("classes");
             classes.setAccessible(true);
@@ -56,10 +49,8 @@ public class Utils {
             java.util.Vector<Class> loadedClasses = (java.util.Vector<Class>) classes.get(Launch.classLoader);
             return loadedClasses;
 
-        }catch (IllegalAccessException ex){
+        }catch (IllegalAccessException | NoSuchFieldException ex){
             ex.printStackTrace();
-        }catch (NoSuchFieldException e1){
-            e1.printStackTrace();
         }
         return null;
     }
@@ -83,30 +74,20 @@ public class Utils {
     }
 
     static OperatingSystem getOperationSystem(){
-        return systemInfo.getOperatingSystem();
+        return new SystemInfo().getOperatingSystem();
     }
-
-
-    Logger logger = Logger.getLogger(Utils.class.getName());
-    static String OS = System.getProperty("os.name").toLowerCase();
-    static int width = Minecraft.getMinecraft().displayWidth;
-    static int height = Minecraft.getMinecraft().displayHeight;
-    static java.net.Proxy proxy = Minecraft.getMinecraft().getProxy();
-    static long systemTime = Minecraft.getSystemTime();
 
     static void sendDump(byte[] stream){
         Minecraft mc = Minecraft.getMinecraft();
         mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("Dump", stream));
     }
 
-    static List<String> settings(){
-        List<String> settingList = new ArrayList<String>();
-        Minecraft minecraft = Minecraft.getMinecraft();
-        settingList.add("Debug: " + minecraft.debug);
-        return settingList;
+    public static void sendPacketLocker(ByteArrayDataOutput buffer){
+        Minecraft mc = Minecraft.getMinecraft();
+        mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("Locker", buffer.toByteArray()));
     }
 
-    static void sendPacket(ByteArrayDataOutput buffer){
+    public static void sendPacket(ByteArrayDataOutput buffer){
         Minecraft mc = Minecraft.getMinecraft();
         mc.thePlayer.sendQueue.addToSendQueue(new C17PacketCustomPayload("AntiCheat", buffer.toByteArray()));
     }
@@ -116,12 +97,6 @@ public class Utils {
         mc.thePlayer.addChatMessage(new ChatComponentText(("&f[&AC&f] " + msg).replace("&", "\u00a7")));
     }
 
-    double JAVA_VERSION = getVersion();
-
-    static String getProcessorInfo(){
-        return System.getenv("PROCESSOR_IDENTIFIER").trim();
-    }
-
     static String getUsername(){
         return System.getProperty("user.name").trim();
     }
@@ -129,13 +104,6 @@ public class Utils {
     static String getPCName(){
 
         return System.getenv("COMPUTERNAME").trim();
-    }
-
-    static double getVersion () {
-        String version = System.getProperty("java.version");
-        int pos = version.indexOf('.');
-        pos = version.indexOf('.', pos+1);
-        return Double.parseDouble (version.substring (0, pos));
     }
 
     static Integer getScreenWidth(){
@@ -169,19 +137,9 @@ public class Utils {
         return "OpenGL driver version " + GL11.glGetString(GL11.GL_VERSION);
     }
 
-    @SideOnly(Side.CLIENT)
-    static String getDriver(){
-        return "Driver Version: {0} " + Display.getVersion();
-    }
-
-    static String getAdapter(){
-
-        return "Driver Version: {0} " + Display.getAdapter();
-    }
-
     static String[] getIP(){
-        systemInfo.getHardware().getNetworkIFs()[0].updateNetworkStats();
-        return systemInfo.getHardware().getNetworkIFs()[0].getIPv4addr();
+        new SystemInfo().getHardware().getNetworkIFs()[0].updateNetworkStats();
+        return new SystemInfo().getHardware().getNetworkIFs()[0].getIPv4addr();
     }
 
     static Long getUsedMemory(){
@@ -189,12 +147,12 @@ public class Utils {
     }
 
     static String getMacAdress(){
-        systemInfo.getHardware().getNetworkIFs()[0].updateNetworkStats();
-        return systemInfo.getHardware().getNetworkIFs()[0].getMacaddr();
+        new SystemInfo().getHardware().getNetworkIFs()[0].updateNetworkStats();
+        return new SystemInfo().getHardware().getNetworkIFs()[0].getMacaddr();
     }
 
     static Long getMemory(){
-        return systemInfo.getHardware().getMemory().getTotal();
+        return new SystemInfo().getHardware().getMemory().getTotal();
     }
 
     static Long getDiskSpace(){
@@ -206,7 +164,7 @@ public class Utils {
         List<File> list = new ArrayList<>();
         File folder = new File(Minecraft.getMinecraft().mcDataDir.getAbsolutePath()+"/resourcepacks");
         File[] listOfFiles = folder.listFiles();
-        for (File file : listOfFiles) {
+        for (File file : Objects.requireNonNull(listOfFiles)) {
             if (file.isFile()) {
                 list.add(file);
             }
@@ -214,25 +172,78 @@ public class Utils {
         return list;
     }
 
+    public static String encryptedHWID(){
+        String input = getRenderer();
+        input += "Family: " + Utils.getHardwareAbstractionLayer().getProcessor().getFamily() + " ID: " + Utils.getHardwareAbstractionLayer().getProcessor().getIdentifier() + " Name: " + Utils.getHardwareAbstractionLayer().getProcessor().getName();
+        input += Utils.getHardwareAbstractionLayer().getComputerSystem().getBaseboard().getSerialNumber();
+
+        return md5(input);
+    }
+
+    private static String md5(String input) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] messageDigest = md.digest(input.getBytes());
+            BigInteger no = new BigInteger(1, messageDigest);
+            StringBuilder hashtext = new StringBuilder(no.toString(16));
+            while (hashtext.length() < 32) {
+                hashtext.insert(0, "0");
+            }
+            return hashtext.toString();
+        }
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String sendToHaste(List<? extends Class> input) throws IOException {
+
+        Gson gson = new Gson();
+        HttpURLConnection connection = (HttpURLConnection) new URL("https://hastebin.com/documents").openConnection();
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+        connection.setUseCaches(false);
+        connection.setRequestMethod( "POST" );
+        connection.setRequestProperty("User-Agent", "Mozilla/5.0");
+        connection.setRequestProperty( "Charset", "UTF-8" );
+        connection.setRequestProperty( "Content-Type", "text/plain" );
+        connection.connect();
+        try (DataOutputStream dos = new DataOutputStream(connection.getOutputStream())){
+
+            for(Class in : input) {
+                dos.write(in.getName().getBytes(StandardCharsets.UTF_8));
+            }
+            dos.flush();
+        }
+
+        String result;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))
+        {
+            result = br.lines().collect(Collectors.joining());
+        }
+        connection.disconnect();
+
+        return "https://hastebin.com/" +  gson.fromJson(result, JsonObject.class).get("key").getAsString();
+    }
+
     static String getMinecraftPath(){
         return Minecraft.getMinecraft().mcDataDir.getAbsolutePath();
     }
 
-
     static long getSystemTime() {
-        return systemTime;
+        return System.currentTimeMillis();
     }
 
     static java.net.Proxy getProxy() {
-        return proxy;
+        return Minecraft.getMinecraft().getProxy();
     }
 
     static Integer getWidth(){
-        return width;
+        return Minecraft.getMinecraft().displayWidth;
     }
 
     static Integer getHeight(){
-        return height;
+        return Minecraft.getMinecraft().displayHeight;
     }
 
 }

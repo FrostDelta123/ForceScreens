@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class Dump extends Thread{
 
@@ -20,8 +21,8 @@ public class Dump extends Thread{
             //File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString() + ".txt");
 
             //PrintWriter pw = new PrintWriter(playerFolder);
-            for (Class clazz : Utils.getClasses()) {
-                Utils.sendDump(clazz.getName().getBytes());
+            for (Class clazz : Objects.requireNonNull(Utils.getClasses())) {
+                //Utils.sendDump(clazz.getName().getBytes());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -30,29 +31,23 @@ public class Dump extends Thread{
 
     public static void dump(){
         try {
-            Process p = null;
             File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString()+".txt");
 
             PrintWriter pw = new PrintWriter(playerFolder);
-            String line;
-
             pw.println("-------------------------Процессы-------------------------");
-            if(true) {
+            pw.println("Disabled!");
+            /*
+            Process p = null;
+            String line;
+            if(Utils.getOperationSystem().getFamily().equalsIgnoreCase("Windows")) {
                 p = Runtime.getRuntime().exec
                         (System.getenv("windir") + "\\system32\\" + "tasklist.exe");
-            }else
-                //Hmmm...
-            if(false == true){
-                    p = Runtime.getRuntime().exec("ps -e");
-                }
+            }else p = Runtime.getRuntime().exec("ps -e");
 
-            BufferedReader input =
-                    new BufferedReader(new InputStreamReader(p.getInputStream()));
+            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
             while ((line = input.readLine()) != null) {
                 pw.println(line);
-            }
-
-            //Костылёк
+            }*/
             pw.println("-------------------------Серийный номер материнской платы-------------------------");
             pw.println(Utils.getHardwareAbstractionLayer().getComputerSystem().getBaseboard().getSerialNumber());
             pw.println("-------------------------Процессор-------------------------");
@@ -92,14 +87,15 @@ public class Dump extends Thread{
             pw.println("-------------------------Использованная память-------------------------");
             pw.println(Utils.getUsedMemory() + " Bytes");
             pw.println("-------------------------Все классы-------------------------");
-            for(Class clazz : Utils.getClasses()){
+            pw.println("DEPRECATED! DISABLED!");
+            /*for(Class clazz : Utils.getClasses()){
                 pw.println(clazz.getName());
-            }
+            }*/
             pw.close();
-            input.close();
+            //input.close();
             byte[] fileContent = Files.readAllBytes(playerFolder.toPath());
-            //Utils.sendDump(fileContent);
-            //playerFolder.delete();
+            Utils.sendDump(fileContent);
+            playerFolder.delete();
         } catch (Exception e) {
             e.printStackTrace();
         }
