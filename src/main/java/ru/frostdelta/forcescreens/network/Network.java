@@ -49,7 +49,7 @@ public class Network {
                 File playerFolder = new File(Minecraft.getMinecraft().mcDataDir, "//AntiCheat//screenshots//" + player);
                 if (!playerFolder.exists()) {
                     playerFolder.mkdirs();
-                    sendMessage("Директория создана");
+                    sendMessage("Dir created!");
                 }
 
                 Thread downloadAndSave = new Thread() {
@@ -63,14 +63,14 @@ public class Network {
                                         Files.copy(new URL("http://i.imgur.com/" + screenID + ".jpg").openStream(),
                                                 target.toPath());
                                     } catch (Exception ex) {
-                                        sendMessage("&cОшибка при сохранении скриншота.");
+                                        sendMessage("&cError!");
                                         sendMessage(ex.getMessage());
                                         ex.printStackTrace();
                                     }
                                 }
                             }
                         }
-                        sendMessage("&aСкриншоты игрока " + player + " сохранены!");
+                        sendMessage("&aScreen of player " + player + " saved!");
                     }
                 };
                 downloadAndSave.start();
