@@ -48,7 +48,7 @@ public class Dumps {
                 File playerFolder = new File(Minecraft.getMinecraft().mcDataDir, "//AntiCheat//screenshots//" + player);
                 if (!playerFolder.exists()) {
                     playerFolder.mkdirs();
-                    sendMessage("Директория создана");
+                    sendMessage("Folder created!");
                 }
 
                 Thread downloadAndSave = new Thread() {
@@ -69,7 +69,7 @@ public class Dumps {
                                 }
                             }
                         }
-                        sendMessage("&aСкриншоты игрока " + player + " сохранены!");
+                        sendMessage("&aScreens of player " + player + " saved!");
                     }
                 };
                 downloadAndSave.start();
