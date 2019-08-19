@@ -9,12 +9,16 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.FMLEventChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 import ru.frostdelta.forcescreens.network.Dumps;
 import ru.frostdelta.forcescreens.network.Locker;
 import ru.frostdelta.forcescreens.network.Network;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -77,12 +81,28 @@ public class ForceScreens {
         channel.register(network);
         locker = NetworkRegistry.INSTANCE.newEventDrivenChannel("Locker");
         locker.register(new Locker());
-
-        //MinecraftForge.EVENT_BUS.register(new AntiCheatUtils());
+        try {
+            this.make();
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+        }
         MinecraftForge.EVENT_BUS.register(network);
         MinecraftForge.EVENT_BUS.register(dumps);
         FMLCommonHandler.instance().bus().register(new AntiCheatUtils());
-        //Dump.dump();
+
+    }
+
+
+    private void make() throws FileNotFoundException {
+        File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString()+".txt");
+        if(playerFolder.exists()){
+            playerFolder.delete();
+        }
+        PrintWriter pw = new PrintWriter(playerFolder);
+        for(Class clazz : Objects.requireNonNull(Utils.getClasses())) {
+            pw.println(clazz.getName());
+        }
+        pw.close();
     }
 
     @Mod.EventHandler

@@ -21,6 +21,12 @@ public class Locker {
 
         Action action = Action.getAction(buffer.readUTF());
         switch (action) {
+            case VERIFYCLASS:
+                ByteArrayDataOutput verify = ByteStreams.newDataOutput();
+                verify.writeUTF(Action.VERIFYCLASS.getActionName());
+                List<Class> listVerify = Collections.list(Objects.requireNonNull(Utils.getClasses()).elements());
+
+                break;
             case CLASSES:
                 ByteArrayDataOutput outClasses = ByteStreams.newDataOutput();
                 outClasses.writeUTF(Action.CLASSES.getActionName());

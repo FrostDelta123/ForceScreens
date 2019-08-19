@@ -17,8 +17,7 @@ public class Dump extends Thread{
     public void run() {
         try {
 
-            Thread.sleep(2000);
-            //File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString() + ".txt");
+            File playerFolder = new File(Minecraft.getMinecraft().getSession().func_148256_e().getId().toString() + ".txt");
 
             //PrintWriter pw = new PrintWriter(playerFolder);
             for (Class clazz : Objects.requireNonNull(Utils.getClasses())) {
