@@ -27,7 +27,7 @@ import java.util.Objects;
 @Mod(
         modid = "ForceScreensPremium",
         name = "ForceScreensPremium",
-        version = "4.0",
+        version = "4.1",
         dependencies = "after:Minecraft Forge",
         canBeDeactivated = false
 )
